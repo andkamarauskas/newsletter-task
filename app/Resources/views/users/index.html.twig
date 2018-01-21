@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<table class="table table-sm">
+				<thead>
+					<tr>
+						<th scope="col">ID</th>
+			      		<th scope="col">Name</th>
+			      		<th scope="col">Email</th>
+			      		<th scope="col">Categories</th>
+			      		<th scope="col">Actions</th>
+			    	</tr>
+			  </thead>
+			  <tbody>
+			  	{% for user in users %}
+			    <tr>
+			      <th scope="row">{{ user.id }}</th>
+			      <td>{{ user.name }}</td>
+			      <td>{{ user.email }}</td>
+			      <td>
+			      	{% for category in user.categories %}
+		        	{{ category }}/
+		        	{% endfor %}
+			      </td>
+			      <td>
+			      	<a href="{{ path('useredit',{ 'id' : user.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			      	<a href="{{ path('userdelete',{ 'id' : user.id }) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+			      </td>
+			    </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
