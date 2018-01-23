@@ -3,12 +3,22 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		<div class="col-md-8 offset-md-2">
+		<div class="col-md-10 offset-md-1">
 			<div class="card card-outline-secondary">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">User Administration</h4>
                 </div>
                 <div class="card-block table-responsive">
+                	<div class="text-right">
+                		<div>
+                			<label>Sort By:</label>
+		                	<select onchange="getSorted(this.value)" name="sortBy">
+		                    	<option value="name">Name</option>
+		                    	<option value="email">Email</option>
+		                    	<option value="date">Date</option>
+		                    </select>
+                		</div>
+                	</div>
 					<table class="table table-sm">
 						<thead>
 							<tr>
@@ -16,6 +26,7 @@
 					      		<th scope="col">Name</th>
 					      		<th scope="col">Email</th>
 					      		<th scope="col">Categories</th>
+					      		<th scope="col">Registred</th>
 					      		<th scope="col">Actions</th>
 					    	</tr>
 					  </thead>
@@ -30,6 +41,7 @@
 				        	{{ categories[categoryId] }}&nbsp;
 				        	{% endfor %}
 					      </td>
+					      <td>{{ user.createdAt }}</td>
 					      <td>
 					      	<a href="{{ path('useredit',{ 'id' : user.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					      	<a href="{{ path('userdelete',{ 'id' : user.id }) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
@@ -46,4 +58,12 @@
 {% endblock %}
 
 {% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	function getSorted(value){
+		window.location.href = "/users/by/"+value;
+	}
+</script>
 {% endblock %}

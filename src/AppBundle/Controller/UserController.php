@@ -25,18 +25,33 @@ class UserController extends Controller
     function __construct(UserDataService $userDataService) {
         $this->userDataService = $userDataService;
     }
+
+    // /**
+    //  * @Route("/users", name="users")
+    //  */
+    // public function indexAction(Request $request,CategoryDataService $categoryDataService)
+    // {
+    // 	$users = $this->userDataService->getAllUsers();
+    //     $categories = $categoryDataService->getCategories();
+
+    // 	return $this->render('users/index.html.twig', array(
+    // 		'users' => $users,
+    //         'categories' => $categories
+    // 	));
+    // }
+
     /**
-     * @Route("/users", name="users")
+     * @Route("/users/by/{sortBy}", name="users")
      */
-    public function indexAction(Request $request,CategoryDataService $categoryDataService)
+    public function sortedAction(Request $request,CategoryDataService $categoryDataService, $sortBy)
     {
-    	$users = $this->userDataService->getAllUsers();
+        $users = $this->userDataService->getAllUsers($sortBy);
         $categories = $categoryDataService->getCategories();
 
-    	return $this->render('users/index.html.twig', array(
-    		'users' => $users,
+        return $this->render('users/index.html.twig', array(
+            'users' => $users,
             'categories' => $categories
-    	));
+        ));
     }
 
     /**

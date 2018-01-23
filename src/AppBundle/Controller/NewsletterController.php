@@ -30,7 +30,7 @@ class NewsletterController extends Controller
         {
             $userDataService->saveUser($form->getData());
 
-            $this->addFlash("success", "User " . $form->getData()->getName() . ' successful registreted!');
+            $this->addFlash("success", $form->getData()->getName() . ' successful registreted!');
 
             return $this->redirectToRoute('mainpage');
         }

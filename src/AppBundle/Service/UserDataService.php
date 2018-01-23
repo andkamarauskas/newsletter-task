@@ -15,8 +15,39 @@ class UserDataService
         $this->users = json_decode($usersJson);
     }
 
-    public function getAllUsers()
+    public function getAllUsers($sortBy = false)
     {
+        switch ($sortBy) 
+        {
+            case 'name':
+                usort($this->users, function ($a, $b)
+                {
+                    return strcmp($a->name, $b->name);
+                });
+                break;
+
+            case 'email':
+                usort($this->users, function ($a, $b)
+                {
+                    return strcmp($a->email, $b->email);
+                });
+                break;
+            
+            default:
+                usort( $this->users, function( $a, $b )
+                {
+                    if ( $a->createdAt == $b->createdAt )
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return ( $a->createdAt < $b->createdAt ) ? -1 : 1;
+                    }
+                });
+                break;
+        }
+
         return $this->users;
     }
 
@@ -42,14 +73,21 @@ class UserDataService
 
     public function saveUser($userData)
     {
-        $lastuser = end($this->users);
-        $id = $lastuser ? $lastuser->id + 1 : 1;
+        if($this->users){
+            $lastuser = end($this->users);
+            $id = $lastuser->id + 1;
+        }else{
+            $id = 1;
+        }
         
+        $datetime = new \DateTime();
+
         $user = [
             'id' => $id,
             'name' => $userData->getName(),
             'email' => $userData->getEmail(),
             'categories' => $userData->getCategories(),
+            'createdAt' => $datetime->format('Y-m-d H:i:s')
         ];
 
         $this->users[] = $user;

@@ -29,6 +29,9 @@ class User
      */
     protected $categories;
 
+    protected $createdAt;
+
+
     public function getId()
     {
         return $this->name;
@@ -49,6 +52,11 @@ class User
         return $this->categories;
     }
 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
     public function setId($id)
     {
         $this->id = $id;
@@ -67,6 +75,11 @@ class User
     public function setCategories($categories)
     {
         $this->categories = $categories;
+    }
+
+    public function setCreatedAt($datetime)
+    {
+        $this->createdAt = $datetime;
     }
 
 }
