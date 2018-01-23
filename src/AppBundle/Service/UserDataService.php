@@ -4,14 +4,14 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
 
-class UserDataSevice
+class UserDataService 
 {
-    private $usersPath;
+	private $usersPath;
     private $users;
 
     function __construct() {
         $this->usersPath = realpath('../var/data/newsletter/users.json');
-        $usersJson = file_get_contents($usersPath);
+        $usersJson = file_get_contents($this->usersPath);
         $this->users = json_decode($usersJson);
     }
 
@@ -31,6 +31,7 @@ class UserDataSevice
                 $userEntity->setName($user->name);
                 $userEntity->setEmail($user->email);
                 $userEntity->setCategories($user->categories);
+
                 return $userEntity;
             }
 
@@ -92,6 +93,6 @@ class UserDataSevice
     public function saveToJson()
     {
         $usersJson = json_encode($this->users);
-        file_put_contents($usersPath, $usersJson);
+        file_put_contents($this->usersPath, $usersJson);
     }
 }

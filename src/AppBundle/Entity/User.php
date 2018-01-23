@@ -12,6 +12,7 @@ class User
     protected $name;
 
     /**
+     * @Assert\NotBlank()
      * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email.",
      *     checkMX = true
@@ -20,6 +21,7 @@ class User
     protected $email;
 
     /**
+     * @Assert\NotBlank()
      * @Assert\Type(
      *     type="array",
      *     message="The value {{ value }} is not a valid {{ type }}."

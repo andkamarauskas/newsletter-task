@@ -5,10 +5,71 @@
         <title>{% block title %}Newsletter{% endblock %}</title>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style type="text/css">
+            body{
+                background: #f9f9f9;    
+            }
+            .card{
+                margin-top: 20px;
+            }
+            .card-block{
+                padding: 20px;
+            }
+            input[type='checkbox'] {
+                margin:10px 5px;
+            }
+        </style>
         {% block stylesheets %}
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-toggleable-md navbar-light navbar-inverse">
+            <div class="container">
+
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/">Ad List</a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                          <li class="nav-item">
+                            {% if app.user %}
+                            <li class="nav-item {% if app.request.attributes.get('_route') == 'create_ad' %}active{% endif %}"><a class="nav-link" href="/ad/create">Add New</a></li>
+                            <li class="nav-item {% if app.request.attributes.get('_route') == 'user_ads' %}active{% endif %}"><a class="nav-link" href="/ad/user">My Ads</a></li>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                            
+                        {% if app.user %}
+                        <li class="nav-item"><a class="nav-link" href="/profile">{{app.user}}</a></li>     
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>            
+                        {% endif %}
+                    </ul>
+                </div> 
+            </div>
+        </nav>
+        <div class="container">
+            
+            <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md">
+                    <a class="navbar-brand" href="#">Newsletter</a>
+
+                    <a class="nav-link" href="#">Login<span class="sr-only">(current)</span></a>
+            </nav>
+        </div>
+        <div class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
         {% block body %}
         {% endblock %}
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

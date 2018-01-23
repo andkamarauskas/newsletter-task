@@ -4,41 +4,40 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 
-use AppBundle\Service\DataService;
+use AppBundle\Service\UserDataService;
+use AppBundle\Service\CategoryDataService;
 
 use AppBundle\Form\UserType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class NewsletterController extends Controller
 {
     /**
      * @Route("/", name="mainpage")
      */
-    public function indexAction(Request $request, DataService $dataService)
+    public function indexAction(Request $request, CategoryDataService $categoryDataService, UserDataService $userDataService)
     {
-        $categories = $dataService->getNewsletterCategories();
-        $user = new User();
+        $categories = $categoryDataService->getCategories();
 
-        $form = $this->createForm(UserType::class, $user, array('categories' => $categories));
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user, array('categories' => array_flip($categories)));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            $dataService->saveUser($form->getData());
+            $userDataService->saveUser($form->getData());
+
+            $this->addFlash("success", "User " . $form->getData()->getName() . ' successful registreted!');
 
             return $this->redirectToRoute('mainpage');
         }
 
         return $this->render('newsletter/index.html.twig', [
             'form' => $form->createView(),
+            'form_title' => 'Registration for Newsletter'
         ]);
     }
 }
