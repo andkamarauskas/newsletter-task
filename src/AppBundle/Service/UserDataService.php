@@ -10,12 +10,13 @@ class UserDataService
     private $users;
 
     function __construct() {
+        //TODO IF FILE EXIST
         $this->usersPath = realpath('../var/data/newsletter/users.json');
         $usersJson = file_get_contents($this->usersPath);
         $this->users = json_decode($usersJson);
     }
 
-    public function getAllUsers($sortBy = false)
+    public function getAllUsers($sortBy)
     {
         switch ($sortBy) 
         {
