@@ -46,11 +46,15 @@ class UserController extends Controller
     public function sortedAction(Request $request,CategoryDataService $categoryDataService, $sortBy)
     {
         $users = $this->userDataService->getAllUsers($sortBy);
+        if(!$users){
+            $this->addFlash('info', 'No Any Users');
+        }
         $categories = $categoryDataService->getCategories();
 
         return $this->render('users/index.html.twig', array(
             'users' => $users,
-            'categories' => $categories
+            'categories' => $categories,
+            'sorted' => $sortBy
         ));
     }
 

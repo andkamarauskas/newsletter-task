@@ -46,13 +46,17 @@
             </nav>
         </div>
         <div class="container">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }}">
-                        {{ message }}
-                    </div>
+            <div class="row">
+                <div class="offset-md-4 col-md-4">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+                </div>
+            </div>
         </div>
 
         {% block body %}

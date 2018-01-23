@@ -11,12 +11,32 @@ class UserDataService
 
     function __construct() {
         //TODO IF FILE EXIST
+        // if(!file_exists(realpath('../var/data/newsletter/users.json')))
+        //     mkdir(realpath('../var/data/newsletter/'), 0777, true);
+        //     $fp = fopen(realpath('../var/data/newsletter/users.json'), 'w');
+        //     fwrite($fp, json_encode($response));
+        //     fclose($fp);
+        // }
         $this->usersPath = realpath('../var/data/newsletter/users.json');
         $usersJson = file_get_contents($this->usersPath);
         $this->users = json_decode($usersJson);
     }
 
     public function getAllUsers($sortBy)
+    {
+        if(count($this->users) > 0)
+        {
+            $this->sortUsersBy($sortBy);
+            return $this->users;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+
+    public function sortUsersBy($sortBy)
     {
         switch ($sortBy) 
         {
@@ -48,10 +68,7 @@ class UserDataService
                 });
                 break;
         }
-
-        return $this->users;
     }
-
     public function getUser($id)
     {
         foreach ($this->users as $user) 
