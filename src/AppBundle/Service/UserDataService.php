@@ -128,7 +128,8 @@ class UserDataService
             {   
                 $user->name = $userData->getName();
                 $user->email = $userData->getEmail();
-                $user->categories = $userData->getCategories();
+                $categories = $userData->getCategories();
+                $user->categories = array_values($categories);
                 
             }
 

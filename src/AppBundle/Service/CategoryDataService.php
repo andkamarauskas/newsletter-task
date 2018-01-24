@@ -28,8 +28,7 @@ class CategoryDataService
 
     public function getCategories()
     {
-        $categories = (array)$this->categories;
-        return array_combine(range(1, count($categories)), array_values($categories));
+        return (array)$this->categories;
     }
 
 }
