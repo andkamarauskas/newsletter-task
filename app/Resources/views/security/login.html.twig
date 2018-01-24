@@ -2,11 +2,13 @@
 
 {% block body %}
 
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
 <div class="form col-md-4 offset-md-4">
-	<div class="card card-outline-secondary">
+	{% if error %}
+		<div class="alert alert-danger">
+	    {{ error.messageKey|trans(error.messageData, 'security') }}
+	    </div>
+	{% endif %}
+    <div class="card card-outline-secondary">
 		<div class="card-header">
             <h4 class="mb-0">Login</h4>
         </div>
@@ -14,11 +16,11 @@
 			<form action="{{ path('login') }}" method="post">
 				<div class="form-group">
 				    <label for="username">Username:</label>
-				    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
+				    <input type="text" class="form-control" required="required" id="username" name="_username" value="{{ last_username }}" />
 				</div>
 				<div class="form-group">
 				    <label for="password">Password:</label>
-				    <input class="form-control" type="password" id="password" name="_password" />
+				    <input class="form-control" type="password" required="required" id="password" name="_password" />
 				</div>
 
 				<div class="form-group">

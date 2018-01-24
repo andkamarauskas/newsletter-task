@@ -2,8 +2,6 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\User;
-
 class CategoryDataService
 {
     private $categoriesPath;
@@ -31,13 +29,6 @@ class CategoryDataService
     public function getCategories()
     {
         return (array)$this->categories;
-    }
-
-    public function getCategoryNames($keys)
-    {
-        foreach ($keys as $value) {
-            
-        }
     }
 
 }
