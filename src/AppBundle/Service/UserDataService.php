@@ -130,7 +130,7 @@ class UserDataService
                 $user->email = $userData->getEmail();
                 $categories = $userData->getCategories();
                 if(!$categories){
-                    $user->categories = ['0'];
+                    $user->categories = [0];
                 }else{
                     $user->categories = $categories;
                 }
