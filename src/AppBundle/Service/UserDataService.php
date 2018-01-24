@@ -121,6 +121,8 @@ class UserDataService
 
     public function updateUser($id,$userData)
     {
+        print_r($userData);
+        die();
         $updateUsers = [];
         foreach ($this->users as $user) 
         {
