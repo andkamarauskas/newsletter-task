@@ -130,7 +130,12 @@ class UserDataService
             {   
                 $user->name = $userData->getName();
                 $user->email = $userData->getEmail();
-                $user->categories = $userData->getCategories();
+                $categories = $userData->getCategories();
+                if(!$categories){
+                    $user->categories = ['0'];
+                }else{
+                    $user->categories = $categories;
+                }
             }
 
             $updateUsers[] = $user;
