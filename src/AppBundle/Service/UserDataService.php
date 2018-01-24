@@ -126,18 +126,10 @@ class UserDataService
         {
             if($user->id == $id)
             {   
-                if($user->name != $userData->getName())
-                {
-                    $user->name = $userData->getName();
-                }
-                if($user->email != $userData->getEmail())
-                {
-                    $user->email = $userData->getEmail();
-                }
-                if($user->categories != $userData->getCategories() && count($user->categories) != 0)
-                {
-                    $user->categories = $userData->getCategories();
-                }
+                $user->name = $userData->getName();
+                $user->email = $userData->getEmail();
+                $user->categories = $userData->getCategories();
+                
             }
 
             $updateUsers[] = $user;
