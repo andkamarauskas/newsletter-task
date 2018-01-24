@@ -21,7 +21,7 @@ class CategoryDataService
             {
                 mkdir($path, 0777, true); 
             }
-            $defaultCategories = ['Bicycles', 'Motorcycles','Tourism'];
+            $defaultCategories = ["Bicycles","Motorcycles","Tourism","Enduro","MTB"];
             file_put_contents($this->categoriesPath, json_encode($defaultCategories));
         }
     }
