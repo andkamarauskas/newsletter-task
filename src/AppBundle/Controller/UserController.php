@@ -13,9 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserController extends Controller
@@ -26,35 +23,39 @@ class UserController extends Controller
         $this->userDataService = $userDataService;
     }
 
-    // /**
-    //  * @Route("/users", name="users")
-    //  */
-    // public function indexAction(Request $request,CategoryDataService $categoryDataService)
-    // {
-    // 	$users = $this->userDataService->getAllUsers();
-    //     $categories = $categoryDataService->getCategories();
-
-    // 	return $this->render('users/index.html.twig', array(
-    // 		'users' => $users,
-    //         'categories' => $categories
-    // 	));
-    // }
-
     /**
-     * @Route("/users/by/{sortBy}", name="users")
+     * @Route("/users/", name="users")
      */
-    public function sortedAction(Request $request,CategoryDataService $categoryDataService, $sortBy)
+    public function indexAction(Request $request, CategoryDataService $categoryDataService)
     {
+        $form = $this->createFormBuilder()
+            ->add('sort', ChoiceType::class, array(
+                'choices'  => array('Date' => 'date', 'Name' => 'name','Email' => 'email')))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        $sortBy = 'date';
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $data = $form->getData();
+            $sortBy = $data['sort'];
+        }
+
+        $categories = $categoryDataService->getCategories();
+
         $users = $this->userDataService->getAllUsers($sortBy);
-        if(!$users){
+
+        if(!$users)
+        {
             $this->addFlash('info', 'No Any Users');
         }
-        $categories = $categoryDataService->getCategories();
 
         return $this->render('users/index.html.twig', array(
             'users' => $users,
             'categories' => $categories,
-            'sorted' => $sortBy
+            'form' => $form->createView()
         ));
     }
 

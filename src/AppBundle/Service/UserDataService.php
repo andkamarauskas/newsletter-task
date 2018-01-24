@@ -9,17 +9,24 @@ class UserDataService
 	private $usersPath;
     private $users;
 
-    function __construct() {
-        //TODO IF FILE EXIST
-        // if(!file_exists(realpath('../var/data/newsletter/users.json')))
-        //     mkdir(realpath('../var/data/newsletter/'), 0777, true);
-        //     $fp = fopen(realpath('../var/data/newsletter/users.json'), 'w');
-        //     fwrite($fp, json_encode($response));
-        //     fclose($fp);
-        // }
-        $this->usersPath = realpath('../var/data/newsletter/users.json');
+    function __construct() 
+    {    
+        $this->usersPath = realpath('../var') . '/data/newsletter/users.json';
+        $this->directoryCheck();
         $usersJson = file_get_contents($this->usersPath);
         $this->users = json_decode($usersJson);
+    }
+
+    public function directoryCheck()
+    {
+        if(!file_exists($this->usersPath))
+        {
+            $path = realpath('../var') . '/data/newsletter';
+            if(!file_exists($path)){
+                mkdir($path, 0777, true);
+            }
+            file_put_contents($this->usersPath, json_encode([]));
+        }
     }
 
     public function getAllUsers($sortBy)

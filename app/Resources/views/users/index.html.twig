@@ -11,12 +11,10 @@
                 <div class="card-block table-responsive">
                 	<div class="text-right">
                 		<div>
-                			<label>Sort By:</label>
-		                	<select onchange="getSorted(this.value)" name="sortBy">
-		                    	<option {{ sorted == 'name' ? 'selected' : '' }} value="name">Name</option>
-		                    	<option {{ sorted == 'email' ? 'selected' : '' }} value="email">Email</option>
-		                    	<option {{ sorted == 'date' ? 'selected' : '' }} value="date">Date</option>
-		                    </select>
+                			{{ form_start(form, {'attr': {'id': 'user_filter'}}) }}
+                			{{ form_label(form.sort) }}
+					        {{ form_widget(form.sort) }}
+                			{{ form_end(form) }}
                 		</div>
                 	</div>
 					<table class="table table-sm">
@@ -62,8 +60,11 @@
 
 {% block javascripts %}
 <script type="text/javascript">
-	function getSorted(value){
-		window.location.href = "/users/by/"+value;
-	}
+	document.addEventListener("DOMContentLoaded", function(event) {
+		var select = document.getElementById("form_sort");
+		form_sort.addEventListener("change", function() {
+			document.getElementById("user_filter").submit();
+		});
+  	});
 </script>
 {% endblock %}
