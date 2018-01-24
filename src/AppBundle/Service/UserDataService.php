@@ -129,8 +129,9 @@ class UserDataService
                 $user->name = $userData->getName();
                 $user->email = $userData->getEmail();
                 $categories = $userData->getCategories();
-                if(!$categories){
+                if(count($categories) == 0){
                     $user->categories = [0];
+                    print_r('here');
                 }else{
                     $user->categories = $categories;
                 }
