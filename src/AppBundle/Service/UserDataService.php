@@ -126,14 +126,17 @@ class UserDataService
         {
             if($user->id == $id)
             {   
-                $user->name = $userData->getName();
-                $user->email = $userData->getEmail();
-                $categories = $userData->getCategories();
-                if(count($categories) == 0){
-                    $user->categories = [0];
-                    print_r('here');
-                }else{
-                    $user->categories = $categories;
+                if($user->name != $userData->getName())
+                {
+                    $user->name = $userData->getName();
+                }
+                if($user->email != $userData->getEmail())
+                {
+                    $user->email = $userData->getEmail();
+                }
+                if($user->categories != $userData->getCategories() && count($user->categories) != 0)
+                {
+                    $user->categories = $userData->getCategories();
                 }
             }
 
